@@ -1,7 +1,7 @@
 class BitcoinsController < ApplicationController
 
   def index
-    @bitcoin = 1.0
+    @bitcoin = params["amount"]
 
   # connect to the Blockchain.com Exchange Rates API
   # DON'T CHANGE THIS CODE
@@ -11,14 +11,14 @@ class BitcoinsController < ApplicationController
   url = "https://blockchain.info/ticker"
   uri = URI(url)
   response = Net::HTTP.get(uri)
-  bitcoin_data = JSON.parse(response)
+  @bitcoin_data = JSON.parse(response)
   # ----------------------
 
   # using the API, extract current rate of bitcoin in USD
-  @usd_rate = bitcoin_data["USD"]["last"]
+  @usd_rate = @bitcoin_data["USD"]["last"]
 
   # calculate value in USD of user's bitcoin
-  @usd_value = @usd_rate * @bitcoin
+  @usd_value = @usd_rate * @bitcoin.to_f
 
     # add backend code
     # render bitcoins/index view
