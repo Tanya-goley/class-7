@@ -2,6 +2,8 @@ class CompaniesController < ApplicationController
 
   def index
     # find all Company rows
+    @companies = Company.all
+
     # render companies/index view
   end
 
